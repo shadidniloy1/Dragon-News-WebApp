@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { FaEye, FaStar } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const SingleNews = ({ news }) => {
   console.log(news);
@@ -33,12 +34,12 @@ const SingleNews = ({ news }) => {
       <div className="px-4 py-3">
         <p className="text-sm text-gray-700">
           {showFull ? details : `${details.slice(0, 120)}...`}
-          <span
-            onClick={() => setShowFull(!showFull)}
+          <Link to={`/news/${news._id}`}
+            // onClick={() => setShowFull(!showFull)}
             className="text-blue-600 font-medium cursor-pointer ml-1"
           >
-            {showFull ? "Show Less" : "Read More"}
-          </span>
+            Read More
+          </Link>
         </p>
       </div>
 
