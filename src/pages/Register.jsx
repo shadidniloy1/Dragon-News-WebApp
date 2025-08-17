@@ -1,9 +1,11 @@
-import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProvider";
 
 const Register = () => {
-  const { CreateNewUser, setUser } = useContext(AuthContext);
+  const { CreateNewUser, setUser, updateUserProfile } = useContext(AuthContext);
+  const [error, setError] = useState({});
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -13,17 +15,27 @@ const Register = () => {
     const email = form.get("email");
     const photo = form.get("photo");
     const password = form.get("password");
+    if(password.length < 6){
+      setError({...error, password: "Password must be equal or longer than 6"})
+      return;
+    }
     console.log({ name, photo, email, password });
 
     CreateNewUser(email, password)
       .then((res) => {
         const user = res.user;
         setUser(user);
-        console.log(user);
+        updateUserProfile({displayName: name, photoURL: photo})
+        .then(() => {
+          navigate("/");
+        })
+        .catch(err => {
+          console.log(err);
+        })
       })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
+      .catch((err) => {
+        const errorCode = err.code;
+        const errorMessage = err.message;
         console.log(errorCode, errorMessage);
       });
   };
@@ -64,6 +76,7 @@ const Register = () => {
                 className="input"
                 placeholder="Password"
               />
+              <label className="label text-xs text-rose-500">{error.password}</label>
               <button className="btn btn-neutral mt-4 rounded-none">
                 Register
               </button>
