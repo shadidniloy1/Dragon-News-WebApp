@@ -19,7 +19,6 @@ const Register = () => {
       setError({...error, password: "Password must be equal or longer than 6"})
       return;
     }
-    console.log({ name, photo, email, password });
 
     CreateNewUser(email, password)
       .then((res) => {
@@ -30,13 +29,13 @@ const Register = () => {
           navigate("/");
         })
         .catch(err => {
-          console.log(err);
+          // console.log(err);
+          alert(err)
         })
       })
       .catch((err) => {
         const errorCode = err.code;
         const errorMessage = err.message;
-        console.log(errorCode, errorMessage);
       });
   };
   return (

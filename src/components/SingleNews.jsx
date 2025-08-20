@@ -3,12 +3,11 @@ import { FaEye, FaStar } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const SingleNews = ({ news }) => {
-  console.log(news);
+  // console.log(news);
   const { title, author, thumbnail_url, total_view, rating, details } = news;
 
   const [showFull, setShowFull] = useState(false);
 
-  console.log(news);
   return (
     <div className="card shadow-md rounded-lg p-4 hover:shadow-xl transition">
       <div className="flex items-center gap-3 mb-4">
